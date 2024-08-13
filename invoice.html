@@ -1,0 +1,49 @@
+<!--NgS_FurnitureStore-->
+<!--Furniture Store-->
+<!--08/15/24-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Sue Ng">
+    <title>Invoice</title>
+    <link href="furniturestore.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <p id="furnstore"></p>
+
+    <a href="index.html">
+        <button>Shop Again</button>
+    </a>
+
+    <h1 id="myTitle">Thank you for your purchase!</h1>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Function to get query parameters
+            function getQueryParam(name) {
+                const params = new URLSearchParams(window.location.search);
+                return params.get(name);
+            }
+
+            // Get the total value from the query parameter
+            const total = getQueryParam('total');
+            
+            // Update the text of the paragraph with id "furnstore"
+            const paragraph = document.getElementById("furnstore");
+            if (total !== null) {
+                paragraph.textContent = `Total: $${total}`;
+            } else {
+                paragraph.textContent = "Total: Not available";
+            }
+        });
+    </script>
+
+    <div class="top-container"></div>
+    <div class="bottom-container"></div>
+        
+</body>
+
+</html>
