@@ -11,39 +11,95 @@
     <title>Invoice</title>
     <link href="furniturestore.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-    <p id="furnstore"></p>
 
+<body>
+
+    <table id="top-container" border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+    <hr>
+    <div class="bottom-container"></div>
+    <table>
+        <tr>
+            <td>Item Total:</td>
+            <td id="item-total"></td>
+        </tr>
+        <tr>
+            <td>Shipping to:</td>
+            <td id="shipping-cost"></td>
+        </tr>
+        <tr>
+            <td>Subtotal:</td>
+            <td id="subtotal"></td>
+        </tr>
+        <tr>
+            <td>Tax:</td>
+            <td id="tax"></td>
+        </tr>
+        <tr>
+            <td>Invoice Total:</td>
+            <td id="invoice-total"></td>
+        </tr>
+    </table>
     <a href="index.html">
         <button>Shop Again</button>
     </a>
-
-    <h1 id="myTitle">Thank you for your purchase!</h1>
-    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("furnstore").addEventListener("click", function () {
             // Function to get query parameters
             function getQueryParam(name) {
                 const params = new URLSearchParams(window.location.search);
                 return params.get(name);
             }
-
-            // Get the total value from the query parameter
-            const total = getQueryParam('total');
+            // Get the values from the query parameters - top-container
+            const shoppingcart = getQueryParam('shoppingcart');
+            const price = getQueryParam('price');
             
-            // Update the text of the paragraph with id "furnstore"
-            const paragraph = document.getElementById("furnstore");
-            if (total !== null) {
-                paragraph.textContent = `Total: $${total}`;
-            } else {
-                paragraph.textContent = "Total: Not available";
+            if (shoppingcart) {
+                const shoppingcart = JSON.parse(decodeURIComponent(shoppingcart));
+                const tableBody = document.querySelector("#top-container tbody");
+
+                // Get the values for the items bought in the shoppingcart
+                shoppingcart.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${shoppingcart.item}</td>
+                        <td>${shoppingcart.quantity}</td>
+                        <td>${shoppingcart.unit_price}</td>
+                        <td>${shoppingcart.quantity * shoppingcart.unit_price}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
             }
+            
+            // Get the values from the query parameters - bottom-container
+            const sum_item_total = getQueryParam('sum_item_total');
+            const sum_shipping_to = getQueryParam('sum_shipping_to');
+            const sum_subtotal = getQueryParam('sum_subtotal');
+            const sum_tax = getQueryParam('sum_tax');
+            const sum_invoice_total = getQueryParam('sum_invoice_total');
+
+            // Get the values for the transaction
+            document.getElementById('item-total').textContent = sum_item_total || 'Not available';
+            document.getElementById('shipping-cost').textContent = sum_shipping_to || 'Not available';
+            document.getElementById('subtotal').textContent = sum_subtotal || 'Not available';
+            document.getElementById('tax').textContent = sum_tax || 'Not available';
+            document.getElementById('invoice-total').textContent = sum_invoice_total || 'Not available';
         });
     </script>
 
-    <div class="top-container"></div>
-    <div class="bottom-container"></div>
-        
 </body>
 
 </html>
