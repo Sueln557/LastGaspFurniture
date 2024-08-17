@@ -1,6 +1,6 @@
-<!--NgS_FurnitureStore-->
-<!--Furniture Store-->
-<!--08/15/24-->
+<!--NgS_FurnitureStore->
+<!--Last Gasp Furniture-->
+<!--08/17/24-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,25 +8,89 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Sue Ng">
-    <title>Furniture Store</title>
+    <title>Last Gasp Furniture Store</title>
     <link href="furniturestore.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-    <div id="furnstore">
-    <form action="invoice.html" method="post">
-        <table>
-            <tr>
-                <td>
-                    <button class="furnstore" onclick="furnstore();">Make a Purchase</button>
-                </td>
-            </tr>
-        </table>
 
-    </form>
+<body>
+
+    <button class="makeapurchase" id="makeapurchase" value="Last Gasp Furniture" onclick="furnstore();">Make a
+        Purchase</button>
+
+    <h1 id="header" style="display:none;">Last Gasp Furniture Invoice</h1>
+    <!-- Table for displaying shopping cart -->
+    <table id="top-container" style="display:none;">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="top-containerBody">
+        </tbody>
+    </table>
+    <hr id="ruler" style="display:none;">
     <script src="furniturestore.js"></script>
-    <div class="top-container"></div>
-    <div class = "bottom-container"></div>
-        
+    <script>
+        function display_output() {
+            // Get the table body element
+            const tableBody = document.getElementById('top-containerBody');
+            tableBody.innerHTML = '';
+
+            // Loop through shopping cart and create rows
+            for (let index = 0; index < shoppingcart.length; index++) {
+                const item = shoppingcart[index];
+                const row = document.createElement('tr');
+
+                // Create cells and append to row
+                row.innerHTML = `
+                    <td>${item.item}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${item.unit_price.toFixed(2)}</td>
+                    <td>$${item.price.toFixed(2)}</td>                   
+                `;
+                tableBody.appendChild(row);
+            }
+
+            // Display the invoice
+            document.getElementById('header').style.display = 'block';
+            document.getElementById('makeapurchase').style.display = 'none';
+            document.getElementById('top-container').style.display = 'table';
+            document.getElementById('ruler').style.display = 'block';
+            document.getElementById('bottom-container').style.display = 'table';
+            document.getElementById('shopagain').style.display = 'block';
+        }
+    </script>
+
+    <table id="bottom-container" style="display:none;">
+        <tr>
+            <td class="boldtblhdr">Item Total:</td>
+            <td id="btsum_item_total"></td>
+        </tr>
+        <tr>
+            <td class="boldtblhdr" id="btstate"></td>
+            <td id="btsum_shipping_to"></td>
+        </tr>
+        <tr>
+            <td class="boldtblhdr">Subtotal:</td>
+            <td id="btsum_subtotal"></td>
+        </tr>
+        <tr>
+            <td class="boldtblhdr">Tax:</td>
+            <td id="btsum_tax"></td>
+        </tr>
+        <tr>
+            <td class="boldtblhdr">Invoice Total:</td>
+            <td id="btsum_invoice_total"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button class="shopagain" id="shopagain" value="Last Gasp Furniture"
+                    style="display:none">Shop Again</button></td>
+        </tr>
+    </table>
+
 </body>
 
 </html>
